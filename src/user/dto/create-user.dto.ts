@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEmail, IsNotEmpty, Max, MinLength } from "class-validator";
+import { IsEmail, IsNotEmpty, Max, MaxLength, MinLength } from "class-validator";
 
 export class CreateUserDto {
     @ApiProperty({
@@ -11,12 +11,12 @@ export class CreateUserDto {
     @IsEmail()
     email: string;
 
-    // @ApiProperty({
-    //     required: false,
-    //     default: false,
-    //     description: ' mark true when user email is verified'
-    // })
-    // isVerified: boolean;
+    @ApiProperty({
+        required: false,
+        default: false,
+        description: ' mark true when user email is verified'
+    })
+    isVerified: boolean;
 
     // @ApiProperty({required: false})
     @ApiPropertyOptional({
@@ -28,7 +28,7 @@ export class CreateUserDto {
         description: ' give me some password'
     })
     @MinLength(6)
-    @Max(10)
+    @MaxLength(10)
     password: string;
 
 

@@ -23,10 +23,10 @@ export class BasicUser {
   })
   fullName?: string;
 
-//   @Prop({
-//     required:false,
-//   })
-//   isVerified: boolean;
+  @Prop({
+    required:false,
+  })
+  isVerified: boolean;
 
   @Prop({
     required:true,

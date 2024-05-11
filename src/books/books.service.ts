@@ -17,6 +17,7 @@ export class BooksService {
 
  async create(CreateBookDto: CreateBookDto):Promise<book> {
     const createdBook =  new this.bookModel(CreateBookDto);
+    this.logger.error(`Book is created`)
     return await createdBook.save();
   }
 
@@ -35,7 +36,7 @@ export class BooksService {
 
     } catch (error) {
       this.logger.error(error);
-      this.logger.error(`An error occurred in fetching feature by Id ${id}. ${error?.message}`);
+      this.logger.error(`An error occurred in fetching Book by Id ${id}. ${error?.message}`);
       // throw new UnprocessableEntityException(`May be invalid id format ${id}`);
       throw error;
     }
@@ -46,11 +47,17 @@ export class BooksService {
     if(!book){
       throw new NotFoundException(`Invalid Book ID ${id}`);
     }
+    this.logger.error(`updated the Book ${id}`)
     const updated = await this.bookModel.findByIdAndUpdate(id, updateBookDto);
     return await this.findById(id);
   }
 
-  remove(id: string) {
+  async remove(id: string) {
+    const book = await this.bookModel.findById(id);
+    if(!book){
+      throw new NotFoundException(`Invalid Book ID ${id}`);
+    }
+    this.logger.error(`Book id ${id} is deleted`)
     return this.bookModel.findByIdAndDelete(id);
   }
 }
