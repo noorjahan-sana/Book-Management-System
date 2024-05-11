@@ -5,7 +5,7 @@ export class CreateBookDto {
     @ApiProperty({
         type: String,
         required: true,
-        description: 'The title of your feature',
+        description: 'The title of your book',
     })
     @IsNotEmpty()
     name: string;
@@ -14,17 +14,17 @@ export class CreateBookDto {
     @ApiProperty({
         type: String,
         required: true,
-        description: 'The title of your feature',
+        description: 'The title of your book',
     })
     @IsNotEmpty()
    
-    autohor: string
+    author: string
 
 
     @ApiProperty({
-        type: String,
+        type: Number,
         required: true,
-        description: 'The title of your feature',
+        description: 'The title of your book',
     })
     @IsNotEmpty()
     @IsNumber()
