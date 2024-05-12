@@ -33,6 +33,13 @@ export class UserService {
     return Boolean(isThere);
   }
 
+  async findUserByEmail(email:string){
+    this.logger.debug(`searching user with email ${email}`);
+    return await this.basicUserModel.findOne({
+      email: email
+    });
+  }
+
 
 
   findAll() {
