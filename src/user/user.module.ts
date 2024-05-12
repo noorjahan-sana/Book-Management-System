@@ -12,5 +12,6 @@ import { BasicUser, BasicUserSchema } from './schemas/Basic-User.schema';
   ],
   controllers: [UserController],
   providers: [UserService],
+  exports:[UserService]
 })
 export class UserModule {}

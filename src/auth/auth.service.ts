@@ -1,6 +1,5 @@
 import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from 'src/user/user.service';
 
@@ -12,27 +11,22 @@ export class AuthService {
 
     }
 
-
-    // async findUserByEmail(email:string){
-    //     return await this.userService.findUserByEmail(email);
-    // }
-
-
   async signIn(
-    username: string,
+   email: string,
     pass: string,
   ): Promise<{ access_token: string, expiresIn: string | undefined  }> {
-    const user = await this.userService.findOne(username);
+    const user = await this.userService.findUserByEmail(email);
     if (user?.password !== pass) {
       throw new UnauthorizedException();
     }
     const payload = {  email: user.email, _id: user._id};
-
+    this.logger.log(payload)
     const token =  await this.jwtService.signAsync(payload , {
       // secret: 'SOME_SECRET_KEY',
       secret: this.configService.get<string>('SECRET_KEY') ,
       expiresIn: this.configService.get<string>('TOKEN_EXPIRY_PERIOD')
     });
+    this.logger.log(token)
   
     return {
       access_token: token,
