@@ -4,6 +4,9 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthJwtGuard } from 'src/auth/gaurd/auth-jwt/auth-jwt.guard';
+import { RolesGuard } from 'src/auth/gaurd/roles/roles.guard';
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { Role } from 'src/auth/enums/role.enum';
 
 
 @Controller('user')
@@ -40,7 +43,8 @@ export class UserController {
 
   @Delete(':id')
   @ApiBearerAuth()
-  @UseGuards(AuthJwtGuard)
+  @UseGuards(AuthJwtGuard, RolesGuard)
+  // @Roles(Role.Admin, Role.SuperAdmin, Role.Terminator)
   remove(@Param('id') id: string) {
     return this.userService.remove(id);
   }
